@@ -19,7 +19,7 @@ int which_type(char *simtype)
     return (-1);
 }
 
-int main(int argc, const char *argv[]) {
+int main(int argc, char *argv[]) {
     if (argc != 4) {
         printf("usage: \n\t$ %s <SimMetric> <string1> <string2>\n", basename(argv[0]));
         printf("\nWhere SimMetric is one of:\n");
@@ -170,12 +170,11 @@ int main(int argc, const char *argv[]) {
             case 33:
             case 34:
                 sm_name = "Double Metaphone Phonetics";
-                char *dm1 = double_metaphone(argv[2]);
-                printf("test");
-                char *dm2 = double_metaphone(argv[3]);
-                sprintf(metrics, "%s & %s", dm1, dm2);
-                free(dm1);
-                free(dm2);
+                double_metaphone_result *dm1 = double_metaphone(argv[2]);
+                double_metaphone_result *dm2 = double_metaphone(argv[3]);
+                sprintf(metrics, "%s, %s & %s, %s", dm1->primary, dm1->secondary, dm2->primary, dm2->secondary);
+                free_double_metaphone_result(dm1);
+                free_double_metaphone_result(dm2);
                 similarity = double_metaphone_similarity(argv[2], argv[3]);
                 break;
             default:
