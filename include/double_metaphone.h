@@ -32,8 +32,8 @@
 
 typedef struct {
 	char *str;
-	int length;
-	int bufsize;
+	size_t length;
+	size_t bufsize;
 	int free_string_on_destroy;
 } metastring;
 

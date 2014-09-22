@@ -9,7 +9,7 @@ const char *SIMMETS[35] = {"block", "block_distance", "cos", "cosine", "dice", "
         "smith", "smith_waterman", "gotoh", "smith_waterman_gotoh", "snd", "soundex",
         "meta", "metaphone", "dmeta", "double_metaphone"};
 
-int which_type(char *simtype) 
+int which_type(char *simtype)
 {
     int i;
     for (i=0; i < SIMMETC; i++) {
@@ -19,7 +19,7 @@ int which_type(char *simtype)
     return (-1);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, const char *argv[]) {
     if (argc != 4) {
         printf("usage: \n\t$ %s <SimMetric> <string1> <string2>\n", basename(argv[0]));
         printf("\nWhere SimMetric is one of:\n");
@@ -171,6 +171,7 @@ int main(int argc, char *argv[]) {
             case 34:
                 sm_name = "Double Metaphone Phonetics";
                 char *dm1 = double_metaphone(argv[2]);
+                printf("test");
                 char *dm2 = double_metaphone(argv[3]);
                 sprintf(metrics, "%s & %s", dm1, dm2);
                 free(dm1);
