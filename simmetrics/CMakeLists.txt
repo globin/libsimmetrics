@@ -26,3 +26,5 @@ SET(SOURCES
 )
 
 add_library(simmetrics ${SOURCES})
+install(TARGETS simmetrics DESTINATION lib)
+install(DIRECTORY ../include/ DESTINATION include/simmetrics FILES_MATCHING PATTERN *.h)
