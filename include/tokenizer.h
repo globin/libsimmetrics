@@ -29,6 +29,9 @@
 #ifndef TOKENIZER_H_
 #define TOKENIZER_H_
 
+#include "utarray.h"
+#include "uthash.h"
+
 #define WHITESPACE_DELIMITERS "\r\n\t \u00A0"
 
 #define QGRAM_SP "#"
