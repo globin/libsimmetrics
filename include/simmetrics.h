@@ -36,7 +36,6 @@
 #include "utlist.h"
 #include "utarray.h"
 #include "uthash.h"
-#include "tokenizer.h"
 #include "qgrams_distance.h"
 #include "block_distance.h"
 #include "cosine_similarity.h"

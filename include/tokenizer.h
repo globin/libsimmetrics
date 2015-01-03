@@ -29,6 +29,10 @@
 #ifndef TOKENIZER_H_
 #define TOKENIZER_H_
 
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "utarray.h"
 #include "uthash.h"
 
@@ -100,6 +104,8 @@ hash_token_t *qgram_uq_tokenize_to_hash(const char *str, const qgram_t *qtype);
 //Dynamic array tokenizers
 UT_array *tokenize_to_utarray(const char *str, const char *delimiters);
 UT_array *qgram_tokenize_to_utarray(const char *str, const qgram_t *qtype);
+
+std::unique_ptr<std::vector<std::string>> tokenize_to_vector(const std::string &str, const char *delimiters);
 
 //Cleanup functions
 void hash_token_free(hash_token_t *table);

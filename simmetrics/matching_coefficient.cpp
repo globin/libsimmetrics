@@ -39,7 +39,7 @@
 
 float matching_coefficient_custom(const char *str1, const char *str2, const void *v_tokenizer) {
 
-	const std_tokenizer_t *tokenizer = v_tokenizer;
+	const std_tokenizer_t *tokenizer = (std_tokenizer_t*)v_tokenizer;
 
 
 	UT_array *t1 = tokenizer->tok_utarr_func(str1, tokenizer->delimiters);
@@ -84,7 +84,7 @@ float matching_coefficient(const char *str1, const char *str2) {
 
 float matching_coefficient_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer) {
 
-	const std_tokenizer_t *tokenizer = v_tokenizer;
+	const std_tokenizer_t *tokenizer = (std_tokenizer_t*)v_tokenizer;
 
 
 	UT_array *tm1 = tokenizer->tok_utarr_func(str1, tokenizer->delimiters);

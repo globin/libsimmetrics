@@ -30,6 +30,7 @@
 #define LEVENSHTEIN_H_
 
 int levenshtein(const char *s, const char *t);
-float levenshtein_similarity(const char *str1, const char *str2);
+
+double levenshtein_similarity(const char *str1, const char *str2);
 
 #endif /* LEVENSHTEIN_H_ */

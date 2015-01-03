@@ -33,7 +33,7 @@
 #include <string.h>
 #include "cost.h"
 
-const char *APPROX[7] = { "dt", "gj", "lr", "mn", "bpv", "aeiou", ",." };
+const char *APPROX[7] = {"dt", "gj", "lr", "mn", "bpv", "aeiou", ",."};
 
 static float _affine_gap_1_over_3(const int idx_start, const int idx_end) {
 
@@ -53,7 +53,7 @@ static float _affine_gap_5_1(const int idx_start, const int idx_end) {
 
 }
 
-static float _sub_cost_1(const char * str1, const int str1_idx, const char *str2, const int str2_idx) {
+static float _sub_cost_1(const char *str1, const int str1_idx, const char *str2, const int str2_idx) {
 
 	if (str1[str1_idx] == str2[str2_idx])
 		return ((float) 0);
@@ -62,7 +62,7 @@ static float _sub_cost_1(const char * str1, const int str1_idx, const char *str2
 
 }
 
-static float _sub_cost_1_min_2(const char * str1, const int str1_idx, const char *str2, const int str2_idx) {
+static float _sub_cost_1_min_2(const char *str1, const int str1_idx, const char *str2, const int str2_idx) {
 
 	size_t l1 = strlen(str1);
 	size_t l2 = strlen(str2);
@@ -80,7 +80,7 @@ static float _sub_cost_1_min_2(const char * str1, const int str1_idx, const char
 
 }
 
-static float _sub_cost_5_3_min_3(const char * str1, const int str1_idx, const char *str2, const int str2_idx) {
+static float _sub_cost_5_3_min_3(const char *str1, const int str1_idx, const char *str2, const int str2_idx) {
 
 	size_t l1 = strlen(str1);
 	size_t l2 = strlen(str2);
@@ -103,7 +103,7 @@ static float _sub_cost_5_3_min_3(const char * str1, const int str1_idx, const ch
 		char c2 = tolower(str2[str2_idx]);
 
 		for (i = 0; i < 7; i++) {
-			if ((strchr(APPROX[i], c1) != NULL ) && (strchr(APPROX[i], c2) != NULL))
+			if ((strchr(APPROX[i], c1) != NULL) && (strchr(APPROX[i], c2) != NULL))
 				return (CHR_APR_SCORE);
 		}
 
@@ -161,7 +161,7 @@ sub_cost_t* sub_cost_1() {
 
 }
 
-sub_cost_t* sub_cost_1_min_2() {
+sub_cost_t *sub_cost_1_min_2() {
 
 	cost_t *cost = malloc(sizeof(cost_t));
 	sub_cost_t *sub_cost = malloc(sizeof(sub_cost_t));
@@ -176,7 +176,7 @@ sub_cost_t* sub_cost_1_min_2() {
 	return (sub_cost);
 }
 
-sub_cost_t* sub_cost_5_3_min_3() {
+sub_cost_t *sub_cost_5_3_min_3() {
 
 	cost_t *cost = malloc(sizeof(cost_t));
 	sub_cost_t *sub_cost = malloc(sizeof(sub_cost_t));
@@ -196,29 +196,29 @@ const cost_t *extract_cost(const void *v_conf, cost_type_e cost_type) {
 	const cost_t *cost_conf_ptr;
 
 	switch (cost_type) {
-	case COST:
-		cost_conf_ptr = (cost_t *)v_conf;
-		break;
-	case SUB_COST:
-		cost_conf_ptr = ((sub_cost_t *)v_conf)->cost;
-		break;
-	case AFFINE_COST:
-		cost_conf_ptr = ((affine_cost_t *)v_conf)->cost;
-		break;
-	case AFFINE_IDX_COST:
-		cost_conf_ptr = ((affine_idx_cost_t *)v_conf)->cost;
-		break;
-	case COMP_COST:
-		cost_conf_ptr = ((comp_cost_t *)v_conf)->sub_cost->cost;
-		break;
-	case COMP_IDX_COST:
-		cost_conf_ptr = ((comp_idx_cost_t *)v_conf)->sub_cost->cost;
-		break;
-	case WIN_COMP_IDX_COST:
-		cost_conf_ptr = ((w_comp_idx_cost_t *)v_conf)->comp_conf->sub_cost->cost;
-		break;
-	default:
-		return (NULL);
+		case COST:
+			cost_conf_ptr = (cost_t *) v_conf;
+			break;
+		case SUB_COST:
+			cost_conf_ptr = ((sub_cost_t *) v_conf)->cost;
+			break;
+		case AFFINE_COST:
+			cost_conf_ptr = ((affine_cost_t *) v_conf)->cost;
+			break;
+		case AFFINE_IDX_COST:
+			cost_conf_ptr = ((affine_idx_cost_t *) v_conf)->cost;
+			break;
+		case COMP_COST:
+			cost_conf_ptr = ((comp_cost_t *) v_conf)->sub_cost->cost;
+			break;
+		case COMP_IDX_COST:
+			cost_conf_ptr = ((comp_idx_cost_t *) v_conf)->sub_cost->cost;
+			break;
+		case WIN_COMP_IDX_COST:
+			cost_conf_ptr = ((w_comp_idx_cost_t *) v_conf)->comp_conf->sub_cost->cost;
+			break;
+		default:
+			return (NULL);
 	}
 
 	return (cost_conf_ptr);
@@ -238,4 +238,3 @@ void free_sub_cost(sub_cost_t *cost) {
 	free(cost);
 
 }
-

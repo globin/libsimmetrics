@@ -26,14 +26,11 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#include <stddef.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include "cost.h"
-#include "uthash.h"
+#include <cstddef>
+#include <cstring>
+#include <cstdlib>
+
 #include "utlist.h"
-#include "utarray.h"
 #include "tokenizer.h"
 
 static unsigned int str_hash(const char *s) {
@@ -64,7 +61,7 @@ dl_token_t *tokenize_to_dllist(const char *str, const char *delimiters) {
 
 	while(tok != NULL) {
 
-		el = malloc(sizeof(dl_token_t));
+		el = (dl_token_t*)malloc(sizeof(dl_token_t));
 		el->token = strdup(tok);
 		DL_APPEND(r, el);
 		tok = strtok(NULL, delimiters);
@@ -90,7 +87,7 @@ dl_token_t *qgram_tokenize_to_dllist(const char *str, const qgram_t *qtype) {
 
 	if(qtype->extended) {
 
-		tmp = calloc((init_len + qtype->qgram_len), sizeof(char));
+		tmp = (char*)calloc((init_len + qtype->qgram_len), sizeof(char));
 
 		for(i = 0; i < (qtype->qgram_len - 1); i++)
 			strcat(tmp, QGRAM_SP);
@@ -102,7 +99,7 @@ dl_token_t *qgram_tokenize_to_dllist(const char *str, const qgram_t *qtype) {
 
 	} else {
 
-		tmp = calloc(init_len, sizeof(char));
+		tmp = (char*)calloc(init_len, sizeof(char));
 		strcpy(tmp, str);
 
 	}
@@ -116,10 +113,10 @@ dl_token_t *qgram_tokenize_to_dllist(const char *str, const qgram_t *qtype) {
 
 	while(cp < len) {
 
-		t_ptr = (char *)&tmp[cp];
-		el = malloc(sizeof(dl_token_t));
+		t_ptr = &tmp[cp];
+		el = (dl_token_t*)malloc(sizeof(dl_token_t));
 		//Allocate all chars - plus terminator...
-		el->token = calloc((qtype->qgram_len + 1), sizeof(char));
+		el->token = (char*)calloc((qtype->qgram_len + 1), sizeof(char));
 		//Copy bytes safely - strncpy should append the \0
 		strncpy(el->token, t_ptr, (sizeof(char) * qtype->qgram_len));
 		DL_APPEND(r, el);
@@ -145,7 +142,7 @@ hash_token_t *qgram_uq_tokenize_to_hash(const char *str, const qgram_t *qtype) {
 
 	if(qtype->extended) {
 
-		tmp = calloc((init_len + qtype->qgram_len), sizeof(char));
+		tmp = (char*)calloc((init_len + qtype->qgram_len), sizeof(char));
 
 		for(i = 0; i < (qtype->qgram_len - 1); i++)
 			strcat(tmp, QGRAM_SP);
@@ -157,7 +154,7 @@ hash_token_t *qgram_uq_tokenize_to_hash(const char *str, const qgram_t *qtype) {
 
 	} else {
 
-		tmp = calloc(init_len, sizeof(char));
+		tmp = (char*)calloc(init_len, sizeof(char));
 		strcpy(tmp, str);
 
 	}
@@ -170,9 +167,9 @@ hash_token_t *qgram_uq_tokenize_to_hash(const char *str, const qgram_t *qtype) {
 
 	while(cp < len) {
 
-		t_ptr = (char *)&tmp[cp];
+		t_ptr = &tmp[cp];
 		//Allocate all chars - plus terminator...
-		hchk = calloc((qtype->qgram_len + 1), sizeof(char));
+		hchk = (char*)calloc((qtype->qgram_len + 1), sizeof(char));
 		//Copy bytes safely - strncpy should append the \0
 		strncpy(hchk, t_ptr, (sizeof(char) * qtype->qgram_len));
 
@@ -182,7 +179,7 @@ hash_token_t *qgram_uq_tokenize_to_hash(const char *str, const qgram_t *qtype) {
 
 		if(s == NULL) {
 
-			s = malloc(sizeof(hash_token_t));
+			s = (hash_token_t*)malloc(sizeof(hash_token_t));
 			s->key = hash;
 			s->value = strdup(hchk);
 			HASH_ADD_INT(table, key, s);
@@ -213,7 +210,7 @@ UT_array *qgram_tokenize_to_utarray(const char *str, const qgram_t *qtype) {
 
 	if(qtype->extended) {
 
-		tmp = calloc((init_len + qtype->qgram_len), sizeof(char));
+		tmp = (char*)calloc((init_len + qtype->qgram_len), sizeof(char));
 
 		for(i = 0; i < (qtype->qgram_len - 1); i++)
 			strcat(tmp, QGRAM_SP);
@@ -225,7 +222,7 @@ UT_array *qgram_tokenize_to_utarray(const char *str, const qgram_t *qtype) {
 
 	} else {
 
-		tmp = calloc(init_len, sizeof(char));
+		tmp = (char*)calloc(init_len, sizeof(char));
 		strcpy(tmp, str);
 
 	}
@@ -241,7 +238,7 @@ UT_array *qgram_tokenize_to_utarray(const char *str, const qgram_t *qtype) {
 
 		t_ptr = (char *)&tmp[cp];
 		//Allocate all chars - plus terminator...
-		el = calloc((qtype->qgram_len + 1), sizeof(char));
+		el = (char*)calloc((qtype->qgram_len + 1), sizeof(char));
 		//Copy bytes safely - strncpy should append the \0
 		strncpy(el, t_ptr, (sizeof(char) * qtype->qgram_len));
 
@@ -276,7 +273,7 @@ hash_token_t *uq_tokenize_to_hash(const char *str, const char *delimiters) {
 
 		if(s == NULL) {
 
-			s = malloc(sizeof(hash_token_t));
+			s = (hash_token_t*)malloc(sizeof(hash_token_t));
 			s->key = str_hash(tok);
 			s->value = strdup(tok);
 			HASH_ADD_INT(table, key, s);
@@ -295,13 +292,13 @@ hash_token_t *merge_tokens(hash_token_t *t1, hash_token_t *t2) {
 
 	hash_token_t *res = NULL, *s, *tmp;
 
-	for(s = t1; s != NULL; s = s->hh.next) {
+	for(s = t1; s != NULL; s = (hash_token_t*)s->hh.next) {
 
 		HASH_FIND_INT(res, &s->key, tmp);
 
 		if(tmp == NULL) {
 
-			tmp = malloc(sizeof(hash_token_t));
+			tmp = (hash_token_t*)malloc(sizeof(hash_token_t));
 			tmp->key = s->key;
 			tmp->value = strdup(s->value);
 			HASH_ADD_INT(res, key, tmp);
@@ -310,13 +307,13 @@ hash_token_t *merge_tokens(hash_token_t *t1, hash_token_t *t2) {
 
 	}
 
-	for(s = t2; s != NULL; s = s->hh.next) {
+	for(s = t2; s != NULL; s = (hash_token_t*)s->hh.next) {
 
 		HASH_FIND_INT(res, &s->key, tmp);
 
 		if(tmp == NULL) {
 
-			tmp = malloc(sizeof(hash_token_t));
+			tmp = (hash_token_t*)malloc(sizeof(hash_token_t));
 			tmp->key = s->key;
 			tmp->value = strdup(s->value);
 			HASH_ADD_INT(res, key, tmp);
@@ -375,7 +372,22 @@ void dll_token_free(dl_token_t *head) {
 		free(elt->token);
 		free(elt);
 	}
-
 }
 
+std::unique_ptr<std::vector<std::string>> tokenize_to_vector(const std::string &str, const char *delimiters) {
 
+	std::unique_ptr<std::vector<std::string>> strs(new std::vector<std::string>);
+
+	char *tok;
+	char tmp[strlen(str.c_str()) + 1];
+	strcpy(tmp, str.c_str());
+
+	tok = strtok(tmp, delimiters);
+
+	while(tok != NULL) {
+		strs->push_back(std::string(tok));
+		tok = strtok(NULL, delimiters);
+	}
+
+	return strs;
+}

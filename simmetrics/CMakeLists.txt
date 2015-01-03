@@ -1,27 +1,27 @@
 include_directories("${libsimmetrics_SOURCE_DIR}/include")
 
 SET(SOURCES
-  block_distance.c
-  cosine_similarity.c
+  block_distance.cpp
+  cosine_similarity.cpp
   cost.c
-  dice_similarity.c
+  dice_similarity.cpp
   double_metaphone.c
-  euclidean_distance.c
-  jaccard_similarity.c
+  euclidean_distance.cpp
+  jaccard_similarity.cpp
   jaro.c
   jaro_winkler.c
-  levenshtein.c
-  matching_coefficient.c
+  levenshtein.cpp
+  matching_coefficient.cpp
   metaphone.c
-  monge_elkan.c
+  monge_elkan.cpp
   needleman_wunch.c
-  overlap_coefficient.c
-  qgrams_distance.c
+  overlap_coefficient.cpp
+  qgrams_distance.cpp
   smith_waterman.c
   smith_waterman_gotoh.c
   soundex.c
   simmetrics.c
-  tokenizer.c
+  tokenizer.cpp
   util.c
 )
 

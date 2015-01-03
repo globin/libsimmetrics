@@ -38,7 +38,7 @@
 
 int qgrams_distance_custom(const char *str1, const char *str2, const void *v_tokenizer) {
 
-	const qgram_tokenizer_t *tokenizer = v_tokenizer;
+	const qgram_tokenizer_t *tokenizer = (qgram_tokenizer_t*)v_tokenizer;
 
 	UT_array *t1 = tokenizer->tok_utarr_func(str1, tokenizer->qgram);
 	UT_array *t2 = tokenizer->tok_utarr_func(str2, tokenizer->qgram);
@@ -53,7 +53,7 @@ int qgrams_distance_custom(const char *str1, const char *str2, const void *v_tok
 
 	char **tmp;
 
-	for(s = all; s != NULL; s = s->hh.next) {
+	for(s = all; s != NULL; s = (hash_token_t*)s->hh.next) {
 
 		cs1 = 0;
 		cs2 = 0;
@@ -106,7 +106,7 @@ int qgrams_distance(const char *str1, const char *str2) {
 
 float qgrams_distance_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer) {
 
-	const qgram_tokenizer_t *tokenizer = v_tokenizer;
+	const qgram_tokenizer_t *tokenizer = (qgram_tokenizer_t*)v_tokenizer;
 
 
 	UT_array *tm1 = tokenizer->tok_utarr_func(str1, tokenizer->qgram);
