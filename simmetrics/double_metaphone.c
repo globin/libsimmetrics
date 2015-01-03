@@ -242,12 +242,12 @@ double_metaphone_result *double_metaphone(const char *str) {
                 else
                     current += 1;
                 break;
-
-            case 'Ç':
-                metaph_add(primary, "S");
-                metaph_add(secondary, "S");
-                current += 1;
-                break;
+//
+//            case 'Ç':
+//                metaph_add(primary, "S");
+//                metaph_add(secondary, "S");
+//                current += 1;
+//                break;
 
             case 'C':
                 /* various germanic */
@@ -707,12 +707,12 @@ double_metaphone_result *double_metaphone(const char *str) {
                 metaph_add(primary, "N");
                 metaph_add(secondary, "N");
                 break;
-
-            case 'Ñ':
-                current += 1;
-                metaph_add(primary, "N");
-                metaph_add(secondary, "N");
-                break;
+//
+//            case 'Ñ':
+//                current += 1;
+//                metaph_add(primary, "N");
+//                metaph_add(secondary, "N");
+//                break;
 
             case 'P':
                 if (get_at(original, current + 1) == 'H') {
