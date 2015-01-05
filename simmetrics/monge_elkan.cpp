@@ -27,25 +27,19 @@
  */
 
 #include <stddef.h>
-#include <stdio.h>
-#include <stdbool.h>
 #include <string.h>
 #include "util.h"
-#include "uthash.h"
-#include "utarray.h"
 #include "cost.h"
 #include "monge_elkan.h"
 #include "smith_waterman_gotoh.h"
 #include "tokenizer.h"
 
-float monge_elkan_similarity_custom(const char *str1, const char *str2,
-		const void *v_conf) {
+double monge_elkan_similarity_custom(const char *str1, const char *str2, const void *v_conf) {
 
-//	cost_type_e cost_type = WIN_COMP_IDX_COST;
 	char *tok_str = WHITESPACE_DELIMITERS;
-	float sum_matches = 0;
-	float max_found;
-	float found = 0;
+	double sum_matches = 0;
+	double max_found;
+	double found = 0;
 
 	int tok1_cnt = 0;
 
@@ -76,13 +70,13 @@ float monge_elkan_similarity_custom(const char *str1, const char *str2,
 
 	}
 
-	return (sum_matches / (float) tok1_cnt);
+	return sum_matches / (double) tok1_cnt;
 
 }
 
-float monge_elkan_similarity(const char *str1, const char *str2) {
+double monge_elkan_similarity(const char *str1, const char *str2) {
 
-	float ret;
+	double ret;
 
 	affine_idx_cost_t *aff_idx_c = affine_gap_5_1();
 	sub_cost_t *sub_cost = sub_cost_5_3_min_3();
@@ -96,7 +90,6 @@ float monge_elkan_similarity(const char *str1, const char *str2) {
 	free_affine_sub_cost(aff_idx_c);
 	free_sub_cost(sub_cost);
 
-	return (ret);
-
+	return ret;
 }
 

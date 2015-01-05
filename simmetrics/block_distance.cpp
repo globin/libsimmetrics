@@ -27,14 +27,11 @@
  */
 #include <string.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include "cost.h"
-#include "utlist.h"
 #include "utarray.h"
 #include "uthash.h"
 #include "tokenizer.h"
 
-int block_distance_custom(const char * str1, const char *str2, const void *v_tokenizer) {
+size_t block_distance_custom(const char * str1, const char *str2, const void *v_tokenizer) {
 
 	const std_tokenizer_t *tokenizer = (std_tokenizer_t*)v_tokenizer;
 
@@ -49,7 +46,7 @@ int block_distance_custom(const char * str1, const char *str2, const void *v_tok
 
 	char **tmp;
 
-	int cs1, cs2, td = 0;
+	size_t cs1, cs2, td = 0;
 
 	for(s = all; s != NULL; s = (hash_token_t*)s->hh.next) {
 
@@ -88,7 +85,7 @@ int block_distance_custom(const char * str1, const char *str2, const void *v_tok
 
 }
 
-int block_distance(const char * str1, const char *str2) {
+size_t block_distance(const char * str1, const char *str2) {
 
 	std_tokenizer_t tokenizer = {
 			.delimiters = WHITESPACE_DELIMITERS,
@@ -100,27 +97,26 @@ int block_distance(const char * str1, const char *str2) {
 
 }
 
-float block_distance_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer) {
+double block_distance_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer) {
 
 	const std_tokenizer_t *tokenizer = (std_tokenizer_t*)v_tokenizer;
 
 	UT_array *strs1 = tokenizer->tok_utarr_func(str1, tokenizer->delimiters);
 	UT_array *strs2 = tokenizer->tok_utarr_func(str2, tokenizer->delimiters);
 
-	float ret;
-	float t_pos = ((float) utarray_len(strs1)) + ((float) utarray_len (strs2));
-	float t_dis = (float) block_distance_custom(str1, str2, tokenizer);
+	double ret;
+	double t_pos = ((double)utarray_len(strs1)) + ((double)utarray_len (strs2));
+	double t_dis = (double)block_distance_custom(str1, str2, tokenizer);
 
 	ret = (t_pos - t_dis) / t_pos;
 
 	utarray_free(strs1);
 	utarray_free(strs2);
 
-	return (ret);
-
+	return ret;
 }
 
-float block_distance_similarity(const char *str1, const char *str2) {
+double block_distance_similarity(const char *str1, const char *str2) {
 
 	std_tokenizer_t tokenizer = {
 			.delimiters = WHITESPACE_DELIMITERS,
@@ -129,6 +125,5 @@ float block_distance_similarity(const char *str1, const char *str2) {
 	};
 
 	return (block_distance_similarity_custom(str1, str2, &tokenizer));
-
 }
 

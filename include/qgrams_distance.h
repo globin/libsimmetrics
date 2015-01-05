@@ -26,12 +26,9 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef QGRAMS_DISTANCE_H_
-#define QGRAMS_DISTANCE_H_
+#pragma once
 
-int qgrams_distance_custom(const char *str1, const char *str2, const void *v_tokenizer);
-int qgrams_distance(const char *str1, const char *str2);
-float qgrams_distance_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
-float qgrams_distance_similarity(const char *str1, const char *str2);
-
-#endif /* QGRAMS_DISTANCE_H_ */
+size_t qgrams_distance_custom(const char *str1, const char *str2, const void *v_tokenizer);
+size_t qgrams_distance(const char *str1, const char *str2);
+double qgrams_distance_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
+double qgrams_distance_similarity(const char *str1, const char *str2);

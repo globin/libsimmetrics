@@ -1,4 +1,7 @@
 #include "simmetrics.h"
+#include <string>
+#include <iomanip>
+#include <iostream>
 
 const int SIMMETC = 35;
 
@@ -31,8 +34,7 @@ int main(int argc, char *argv[]) {
         }
         printf("\n");
         return (1);
-    }
-    else if (strcmp(argv[1], "all") == 0) {
+    } else if (strcmp(argv[1], "all") == 0) {
         argv[1] = "block_distance"; main(argc, argv);
         argv[1] = "cosine"; main(argc, argv);
         argv[1] = "dice"; main(argc, argv);
@@ -51,17 +53,17 @@ int main(int argc, char *argv[]) {
         argv[1] = "soundex"; main(argc, argv);
         argv[1] = "metaphone"; main(argc, argv);
         argv[1] = "double_metaphone"; main(argc, argv);
-    }
-    else {
-        float similarity = 0;
-        char *sm_name, metrics[50], compare[50];
+    } else {
+        double similarity = 0;
+        char metrics[50], compare[50];
+        std::string sm_name;
 
         sprintf(compare, "%10s & %-10s", argv[2], argv[3]);
         switch (which_type(argv[1])) {
             case 0:
             case 1:
                 sm_name = "Block Distance";
-                sprintf(metrics, "%d", block_distance(argv[2], argv[3]));
+                sprintf(metrics, "%zu", block_distance(argv[2], argv[3]));
                 similarity = block_distance_similarity(argv[2], argv[3]);
                 break;
             case 2:
@@ -102,7 +104,7 @@ int main(int argc, char *argv[]) {
             case 13:
             case 14:
                 sm_name = "Levenshtein Distance";
-                sprintf(metrics, "%d", levenshtein(argv[2], argv[3]));
+                sprintf(metrics, "%zu", levenshtein(argv[2], argv[3]));
                 similarity = levenshtein_similarity(argv[2], argv[3]);
                 break;
             case 15:
@@ -132,7 +134,7 @@ int main(int argc, char *argv[]) {
             case 23:
             case 24:
                 sm_name = "QGrams Distance";
-                sprintf(metrics, "%d", qgrams_distance(argv[2], argv[3]));
+                sprintf(metrics, "%zu", qgrams_distance(argv[2], argv[3]));
                 similarity = qgrams_distance_similarity(argv[2], argv[3]);
                 break;
             case 25:
@@ -148,43 +150,45 @@ int main(int argc, char *argv[]) {
                 similarity = smith_waterman_gotoh_similarity(argv[2], argv[3]);
                 break;
             case 29:
-            case 30:
-                sm_name = "Soundex Phonetics";
-                char *s1 = soundex(argv[2]);
-                char *s2 = soundex(argv[3]);
-                sprintf(metrics, "%s & %s", s1, s2);
-                free(s1);
-                free(s2);
-                similarity = soundex_similarity(argv[2], argv[3]);
-                break;
+            case 30: {
+                    sm_name = "Soundex Phonetics";
+                    char *s1 = soundex(argv[2]);
+                    char *s2 = soundex(argv[3]);
+                    sprintf(metrics, "%s & %s", s1, s2);
+                    free(s1);
+                    free(s2);
+                    similarity = soundex_similarity(argv[2], argv[3]);
+                } break;
             case 31:
-            case 32:
-                sm_name = "Metaphone Phonetics";
-                char *m1 = metaphone(argv[2]);
-                char *m2 = metaphone(argv[3]);
-                sprintf(metrics, "%s & %s", m1, m2);
-                free(m1);
-                free(m2);
-                similarity = metaphone_similarity(argv[2], argv[3]);
-                break;
+            case 32: {
+                    sm_name = "Metaphone Phonetics";
+                    char *m1 = metaphone(argv[2]);
+                    char *m2 = metaphone(argv[3]);
+                    sprintf(metrics, "%s & %s", m1, m2);
+                    free(m1);
+                    free(m2);
+                    similarity = metaphone_similarity(argv[2], argv[3]);
+                } break;
             case 33:
-            case 34:
-                sm_name = "Double Metaphone Phonetics";
-                double_metaphone_result *dm1 = double_metaphone(argv[2]);
-                double_metaphone_result *dm2 = double_metaphone(argv[3]);
-                sprintf(metrics, "%s, %s & %s, %s", dm1->primary, dm1->secondary, dm2->primary, dm2->secondary);
-                free_double_metaphone_result(dm1);
-                free_double_metaphone_result(dm2);
-                similarity = double_metaphone_similarity(argv[2], argv[3]);
-                break;
+            case 34: {
+                    sm_name = "Double Metaphone Phonetics";
+                    double_metaphone_result *dm1 = double_metaphone(argv[2]);
+                    double_metaphone_result *dm2 = double_metaphone(argv[3]);
+                    sprintf(metrics, "%s, %s & %s, %s", dm1->primary, dm1->secondary, dm2->primary, dm2->secondary);
+                    free_double_metaphone_result(dm1);
+                    free_double_metaphone_result(dm2);
+                    similarity = double_metaphone_similarity(argv[2], argv[3]);
+                } break;
             default:
                printf("Unknown SimMetric %s, not found.\n", argv[1]);
-               return (1);
+               return 1;
         }
 
-        printf("%-31s between %-25s is %12s ", sm_name, compare, metrics);
-        printf("and yields a %3.0f%% similarity\n", similarity * 100);
+        std::cout << std::setw(31) << sm_name << " between "
+                  << std::setw(25) << compare << " is " << std::setw(12) << metrics;
 
-        return (EXIT_SUCCESS);
+        printf(" and yields a %3.0f%% similarity\n", similarity * 100);
+
+        return EXIT_SUCCESS;
     }
 }

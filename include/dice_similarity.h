@@ -26,10 +26,7 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef DICE_SIMILARITY_H_
-#define DICE_SIMILARITY_H_
+#pragma once
 
-float dice_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
-float dice_similarity(const char *str1, const char *str2);
-
-#endif /* DICE_SIMILARITY_H_ */
+double dice_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
+double dice_similarity(const char *str1, const char *str2);

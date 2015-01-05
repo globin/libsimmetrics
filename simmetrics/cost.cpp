@@ -28,59 +28,58 @@
 
 #include <stddef.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <ctype.h>
 #include <string.h>
 #include "cost.h"
 
 const char *APPROX[7] = {"dt", "gj", "lr", "mn", "bpv", "aeiou", ",."};
 
-static float _affine_gap_1_over_3(const int idx_start, const int idx_end) {
+static double _affine_gap_1_over_3(const size_t idx_start, const size_t idx_end) {
 
 	if (idx_start >= idx_end)
-		return ((float) 0);
+		return ((double) 0);
 	else
-		return (((float) 1) + (((idx_end - 1) - idx_start) * (((float) 1) / ((float) 3))));
+		return (((double) 1) + (((idx_end - 1) - idx_start) * (((double) 1) / ((double) 3))));
 
 }
 
-static float _affine_gap_5_1(const int idx_start, const int idx_end) {
+static double _affine_gap_5_1(const size_t idx_start, const size_t idx_end) {
 
 	if (idx_start >= idx_end)
-		return ((float) 0);
+		return ((double) 0);
 	else
-		return (((float) 5) + ((idx_end - 1) - idx_start));
+		return (((double) 5) + ((idx_end - 1) - idx_start));
 
 }
 
-static float _sub_cost_1(const char *str1, const int str1_idx, const char *str2, const int str2_idx) {
+static double _sub_cost_1(const char *str1, const size_t str1_idx, const char *str2, const size_t str2_idx) {
 
 	if (str1[str1_idx] == str2[str2_idx])
-		return ((float) 0);
+		return ((double) 0);
 	else
-		return ((float) 1);
+		return ((double) 1);
 
 }
 
-static float _sub_cost_1_min_2(const char *str1, const int str1_idx, const char *str2, const int str2_idx) {
+static double _sub_cost_1_min_2(const char *str1, const size_t str1_idx, const char *str2, const size_t str2_idx) {
 
 	size_t l1 = strlen(str1);
 	size_t l2 = strlen(str2);
 
 	if (((int) l1 <= str1_idx) || (str1_idx < 0))
-		return ((float) 0);
+		return ((double) 0);
 
 	if (((int) l2 <= str2_idx) || (str2_idx < 0))
-		return ((float) 0);
+		return ((double) 0);
 
 	if (str1[str1_idx] == str2[str2_idx])
-		return ((float) 1);
+		return ((double) 1);
 	else
-		return ((float) -2);
+		return ((double) -2);
 
 }
 
-static float _sub_cost_5_3_min_3(const char *str1, const int str1_idx, const char *str2, const int str2_idx) {
+static double _sub_cost_5_3_min_3(const char *str1, const size_t str1_idx, const char *str2, const size_t str2_idx) {
 
 	size_t l1 = strlen(str1);
 	size_t l2 = strlen(str2);
@@ -115,8 +114,8 @@ static float _sub_cost_5_3_min_3(const char *str1, const int str1_idx, const cha
 
 affine_idx_cost_t* affine_gap_1_over_3() {
 
-	cost_t *cost = malloc(sizeof(cost_t));
-	affine_idx_cost_t *sub_cost = malloc(sizeof(affine_idx_cost_t));
+	cost_t *cost = (cost_t*)malloc(sizeof(cost_t));
+	affine_idx_cost_t *sub_cost = (affine_idx_cost_t*)malloc(sizeof(affine_idx_cost_t));
 
 	cost->max_cost = 1;
 	cost->min_cost = 0;
@@ -131,8 +130,8 @@ affine_idx_cost_t* affine_gap_1_over_3() {
 
 affine_idx_cost_t* affine_gap_5_1() {
 
-	cost_t *cost = malloc(sizeof(cost_t));
-	affine_idx_cost_t *sub_cost = malloc(sizeof(affine_idx_cost_t));
+	cost_t *cost = (cost_t*)malloc(sizeof(cost_t));
+	affine_idx_cost_t *sub_cost = (affine_idx_cost_t*)malloc(sizeof(affine_idx_cost_t));
 
 	cost->max_cost = 5;
 	cost->min_cost = 0;
@@ -147,8 +146,8 @@ affine_idx_cost_t* affine_gap_5_1() {
 
 sub_cost_t* sub_cost_1() {
 
-	cost_t *cost = malloc(sizeof(cost_t));
-	sub_cost_t *sub_cost = malloc(sizeof(sub_cost_t));
+	cost_t *cost = (cost_t*)malloc(sizeof(cost_t));
+	sub_cost_t *sub_cost = (sub_cost_t*)malloc(sizeof(sub_cost_t));
 
 	cost->max_cost = 1;
 	cost->min_cost = 0;
@@ -163,8 +162,8 @@ sub_cost_t* sub_cost_1() {
 
 sub_cost_t *sub_cost_1_min_2() {
 
-	cost_t *cost = malloc(sizeof(cost_t));
-	sub_cost_t *sub_cost = malloc(sizeof(sub_cost_t));
+	cost_t *cost = (cost_t*)malloc(sizeof(cost_t));
+	sub_cost_t *sub_cost = (sub_cost_t*)malloc(sizeof(sub_cost_t));
 
 	cost->max_cost = 1;
 	cost->min_cost = -2;
@@ -178,8 +177,8 @@ sub_cost_t *sub_cost_1_min_2() {
 
 sub_cost_t *sub_cost_5_3_min_3() {
 
-	cost_t *cost = malloc(sizeof(cost_t));
-	sub_cost_t *sub_cost = malloc(sizeof(sub_cost_t));
+	cost_t *cost = (cost_t*)malloc(sizeof(cost_t));
+	sub_cost_t *sub_cost = (sub_cost_t*)malloc(sizeof(sub_cost_t));
 
 	cost->max_cost = 5;
 	cost->min_cost = -3;

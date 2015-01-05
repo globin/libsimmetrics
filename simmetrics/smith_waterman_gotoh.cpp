@@ -28,29 +28,28 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <stddef.h>
 #include "util.h"
 #include "cost.h"
 #include "smith_waterman_gotoh.h"
 
-float smith_waterman_gotoh_custom(const char *str1, const char *str2, const void *v_conf) {
+double smith_waterman_gotoh_custom(const char *str1, const char *str2, const void *v_conf) {
 
-	const w_comp_idx_cost_t *conf = v_conf;
+	const w_comp_idx_cost_t *conf = (w_comp_idx_cost_t*)v_conf;
 
-	float cost;
-	float max_so_far = 0;
-	float max_gap_cost = 0;
-	float max_gap_cost1 = 0;
-	float max_gap_cost2 = 0;
+	double cost;
+	double max_so_far = 0;
+	double max_gap_cost = 0;
+	double max_gap_cost1 = 0;
+	double max_gap_cost2 = 0;
 
-	int n = strlen(str1);
-	int m = strlen(str2);
-	int i, j, k, w_st;
+	size_t n = strlen(str1);
+	size_t m = strlen(str2);
+	size_t i, j, k, w_st;
 
 	if ((n == 0) || (m == 0))
-		return ((float) 0);
+		return ((double) 0);
 
-	float d[n][m];
+	double d[n][m];
 
 	for (i = 0; i < n; i++) {
 
@@ -137,7 +136,7 @@ float smith_waterman_gotoh_custom(const char *str1, const char *str2, const void
 
 }
 
-float smith_waterman_gotoh(const char *str1, const char *str2) {
+double smith_waterman_gotoh(const char *str1, const char *str2) {
 
 	comp_idx_cost_t comp_cost = {
 			.gap_cost = affine_gap_5_1(),
@@ -153,13 +152,13 @@ float smith_waterman_gotoh(const char *str1, const char *str2) {
 
 }
 
-float smith_waterman_gotoh_similarity_custom(const char *str1, const char *str2, const void *v_conf) {
+double smith_waterman_gotoh_similarity_custom(const char *str1, const char *str2, const void *v_conf) {
 
-	const w_comp_idx_cost_t *conf = v_conf;
+	const w_comp_idx_cost_t *conf = (w_comp_idx_cost_t*)v_conf;
 
-	float sw_gotoh = smith_waterman_gotoh_custom(str1, str2, conf);
-	float max_value = MIN((float)strlen(str1), (float)strlen(str2));
-	float ret;
+	double sw_gotoh = smith_waterman_gotoh_custom(str1, str2, conf);
+	double max_value = MIN((double)strlen(str1), (double)strlen(str2));
+	double ret;
 
 	if(conf->comp_conf->sub_cost->cost->max_cost > -conf->comp_conf->gap_cost->cost->max_cost)
 		max_value *= conf->comp_conf->sub_cost->cost->max_cost;
@@ -171,13 +170,12 @@ float smith_waterman_gotoh_similarity_custom(const char *str1, const char *str2,
 	else
 		ret = (sw_gotoh / max_value);
 
-	return (ret);
-
+	return ret;
 }
 
-float smith_waterman_gotoh_similarity(const char *str1, const char *str2) {
+double smith_waterman_gotoh_similarity(const char *str1, const char *str2) {
 
-	float ret;
+	double ret;
 
 	affine_idx_cost_t *aff_idx_c = affine_gap_5_1();
 	sub_cost_t *sub_cost = sub_cost_5_3_min_3();
@@ -197,7 +195,6 @@ float smith_waterman_gotoh_similarity(const char *str1, const char *str2) {
 	free_affine_sub_cost(aff_idx_c);
 	free_sub_cost(sub_cost);
 
-	return (ret);
-
+	return ret;
 }
 

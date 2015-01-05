@@ -26,11 +26,7 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef OVERLAP_COEFFICIENT_H_
-#define OVERLAP_COEFFICIENT_H_
+#pragma once
 
-float overlap_coefficient_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
-float overlap_coefficient_similarity(const char *str1, const char *str2);
-
-
-#endif /* OVERLAP_COEFFICIENT_H_ */
+double overlap_coefficient_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
+double overlap_coefficient_similarity(const char *str1, const char *str2);

@@ -61,7 +61,6 @@
  * SUCH DAMAGE.
  */
 
-#include <string.h>
 #include "util.h"
 
 unsigned int str_hash(const char *s) {

@@ -276,7 +276,6 @@
  */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
@@ -296,7 +295,8 @@ char *chrptr, *chrptr1;
 
 char *metaphone(const char *str) {
 
-	int ii, jj, silent, hard, Lng, lastChr, metalen = MAX_MLEN;
+	int ii, jj, silent, hard, metalen = MAX_MLEN;
+	size_t lastChr, Lng;
 
 	char curLtr, prevLtr, nextLtr, nextLtr2, nextLtr3;
 
@@ -305,7 +305,7 @@ char *metaphone(const char *str) {
 	char wname[60];
 	char *ename = wname;
 
-	char *metaph = malloc(sizeof(char) * metalen);
+	char *metaph = (char*)malloc(sizeof(char) * metalen);
 	metaph[0] = '\0';
 
 	jj = 0;
@@ -526,8 +526,9 @@ char *metaphone(const char *str) {
 		case 'Z':
 			strncat(metaph, "S", 1);
 			break;
+        default:
+			break;
 		}
-
 	}
 
 	/*  DON'T DO THIS NOW, REMOVING "S" IN BEGINNING HAS the same effect
@@ -540,17 +541,16 @@ char *metaphone(const char *str) {
 	return (metaph);
 }
 
-float metaphone_similarity(const char *str1, const char *str2) {
+double metaphone_similarity(const char *str1, const char *str2) {
 
 	char *s1 = metaphone(str1);
 	char *s2 = metaphone(str2);
 
-	float res = smith_waterman_gotoh_similarity(s1, s2);
+	double res = smith_waterman_gotoh_similarity(s1, s2);
 
 	free(s1);
 	free(s2);
 
 	return (res);
-
 }
 

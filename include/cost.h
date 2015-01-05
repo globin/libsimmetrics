@@ -26,14 +26,13 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef COST_H_
-#define COST_H_
+#pragma once
 
 #include <stddef.h>
 
-#define CHR_MIS_SCORE (float)-3
-#define CHR_EXT_SCORE (float)5
-#define CHR_APR_SCORE (float)3
+#define CHR_MIS_SCORE (double)-3
+#define CHR_EXT_SCORE (double)5
+#define CHR_APR_SCORE (double)3
 
 typedef enum {
 	COST,
@@ -46,29 +45,29 @@ typedef enum {
 } cost_type_e;
 
 typedef struct {
-	float max_cost;
-	float min_cost;
-	float gap_cost; //Provided in case a metric needs it...
+	double max_cost;
+	double min_cost;
+	double gap_cost; //Provided in case a metric needs it...
 } cost_t;
 
 typedef struct {
 
 	cost_t *cost;
-	float (*cost_func)(const char *, const int, const char *, const int);
+	double (*cost_func)(const char *, const size_t, const char *, const size_t);
 
 } sub_cost_t;
 
 typedef struct {
 
 	cost_t *cost;
-	float (*cost_func)(const char *, const int, const int);
+	double (*cost_func)(const char *, const int, const int);
 
 } affine_cost_t;
 
 typedef struct {
 
 	cost_t *cost;
-	float (*cost_func) (const int, const int);
+	double (*cost_func) (const size_t, const size_t);
 
 } affine_idx_cost_t;
 
@@ -103,5 +102,3 @@ const cost_t *extract_cost(const void *v_conf, cost_type_e cost_type);
 
 void free_affine_sub_cost(affine_idx_cost_t *cost);
 void free_sub_cost(sub_cost_t *cost);
-
-#endif /* COST_H_ */

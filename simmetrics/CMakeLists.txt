@@ -3,26 +3,26 @@ include_directories("${libsimmetrics_SOURCE_DIR}/include")
 SET(SOURCES
   block_distance.cpp
   cosine_similarity.cpp
-  cost.c
+  cost.cpp
   dice_similarity.cpp
-  double_metaphone.c
+  double_metaphone.cpp
   euclidean_distance.cpp
   jaccard_similarity.cpp
-  jaro.c
-  jaro_winkler.c
+  jaro.cpp
+  jaro_winkler.cpp
   levenshtein.cpp
   matching_coefficient.cpp
-  metaphone.c
+  metaphone.cpp
   monge_elkan.cpp
-  needleman_wunch.c
+  needleman_wunch.cpp
   overlap_coefficient.cpp
   qgrams_distance.cpp
-  smith_waterman.c
-  smith_waterman_gotoh.c
-  soundex.c
-  simmetrics.c
+  smith_waterman.cpp
+  smith_waterman_gotoh.cpp
+  soundex.cpp
+  simmetrics.cpp
   tokenizer.cpp
-  util.c
+  util.cpp
 )
 
 add_library(simmetrics ${SOURCES})

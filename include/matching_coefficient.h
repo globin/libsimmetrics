@@ -26,12 +26,9 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef MATCHING_COEFFICIENT_H_
-#define MATCHING_COEFFICIENT_H_
+#pragma once
 
-float matching_coefficient_custom(const char *str1, const char *str2, const void *v_tokenizer);
-float matching_coefficient(const char *str1, const char *str2);
-float matching_coefficient_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
-float matching_coefficient_similarity(const char *str1, const char *str2);
-
-#endif /* MATCHING_COEFFICIENT_H_ */
+double matching_coefficient_custom(const char *str1, const char *str2, const void *v_tokenizer);
+double matching_coefficient(const char *str1, const char *str2);
+double matching_coefficient_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
+double matching_coefficient_similarity(const char *str1, const char *str2);

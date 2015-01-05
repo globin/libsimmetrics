@@ -162,7 +162,7 @@ int str_at(metastring *s, size_t start, size_t length, ...) {
     return (0);
 }
 
-void metaph_add(metastring *s, char *new_str) {
+void metaph_add(metastring *s, char const *new_str) {
     size_t add_length;
 
     if (new_str == NULL)
@@ -1033,10 +1033,10 @@ double_metaphone_result *double_metaphone(const char *str) {
     return result;
 }
 
-float double_metaphone_similarity(const char *str1, const char *str2) {
+double double_metaphone_similarity(const char *str1, const char *str2) {
     double_metaphone_result *s1 = double_metaphone(str1);
     double_metaphone_result *s2 = double_metaphone(str2);
-    float res = smith_waterman_gotoh_similarity(s1->primary, s2->primary);
+    double res = smith_waterman_gotoh_similarity(s1->primary, s2->primary);
     free_double_metaphone_result(s1);
     free_double_metaphone_result(s2);
 

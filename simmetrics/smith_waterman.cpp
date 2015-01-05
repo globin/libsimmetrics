@@ -32,28 +32,28 @@
 #include "util.h"
 #include "smith_waterman.h"
 
-float smith_waterman_custom(const char *str1, const char *str2, const void *v_conf) {
+double smith_waterman_custom(const char *str1, const char *str2, const void *v_conf) {
 
-	const sub_cost_t *sub_cost = v_conf;
+	const sub_cost_t *sub_cost = (sub_cost_t*)v_conf;
 
-	float cost;
-	float max_so_far = (float) 0;
+	double cost;
+	double max_so_far = (double) 0;
 
-	int n = strlen(str1);
-	int m = strlen(str2);
+	size_t n = strlen(str1);
+	size_t m = strlen(str2);
 	int i, j;
 
 	if ((n == 0) || (m == 0))
-		return ((float) 0);
+		return ((double) 0);
 
-	float d[n][m];
+	double d[n][m];
 
 	for (i = 0; i < n; i++) {
 
 		cost = sub_cost->cost_func(str1, i, str2, 0);
 
 		if (i == 0)
-			d[0][0] = MAX3((float)0, -sub_cost->cost->gap_cost, cost);
+			d[0][0] = MAX3((double)0, -sub_cost->cost->gap_cost, cost);
 		else
 			d[i][0] = MAX3(0, d[i - 1][0] - sub_cost->cost->gap_cost, cost);
 
@@ -82,7 +82,7 @@ float smith_waterman_custom(const char *str1, const char *str2, const void *v_co
 
 			cost = sub_cost->cost_func(str1, i, str2, j);
 
-			d[i][j] = MAX4((float)0, (d[i - 1][j] - sub_cost->cost->gap_cost), (d[i][j - 1] - sub_cost->cost->gap_cost), (d[i - 1][j - 1] + cost));
+			d[i][j] = MAX4((double)0, (d[i - 1][j] - sub_cost->cost->gap_cost), (d[i][j - 1] - sub_cost->cost->gap_cost), (d[i - 1][j - 1] + cost));
 
 			if (d[i][j] > max_so_far)
 				max_so_far = d[i][j];
@@ -95,19 +95,19 @@ float smith_waterman_custom(const char *str1, const char *str2, const void *v_co
 
 }
 
-float smith_waterman(const char *str1, const char *str2) {
+double smith_waterman(const char *str1, const char *str2) {
 
 	return (smith_waterman_custom(str1, str2, sub_cost_1_min_2()));
 
 }
 
-float smith_waterman_similarity_custom(const char *str1, const char *str2, const void *v_conf) {
+double smith_waterman_similarity_custom(const char *str1, const char *str2, const void *v_conf) {
 
-	const sub_cost_t *sub_cost = v_conf;
+	const sub_cost_t *sub_cost = (sub_cost_t*)v_conf;
 
-	float sw = smith_waterman_custom(str1, str2, sub_cost);
-	float max_val = MIN(strlen(str1), strlen(str2));
-	float ret;
+	double sw = smith_waterman_custom(str1, str2, sub_cost);
+	double max_val = MIN(strlen(str1), strlen(str2));
+	double ret;
 
 	if(sub_cost->cost->max_cost > -sub_cost->cost->gap_cost)
 		max_val *= sub_cost->cost->max_cost;
@@ -115,7 +115,7 @@ float smith_waterman_similarity_custom(const char *str1, const char *str2, const
 		max_val *= -sub_cost->cost->gap_cost;
 
 	if(max_val == 0)
-		ret = (float)1;
+		ret = (double)1;
 	else
 		ret = (sw / max_val);
 
@@ -123,7 +123,7 @@ float smith_waterman_similarity_custom(const char *str1, const char *str2, const
 
 }
 
-float smith_waterman_similarity(const char *str1, const char *str2) {
+double smith_waterman_similarity(const char *str1, const char *str2) {
 
 	return (smith_waterman_similarity_custom(str1, str2, sub_cost_1_min_2()));
 

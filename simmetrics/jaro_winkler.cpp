@@ -53,7 +53,7 @@
 #define MAX_VAR_SIZE 61
 #define NULL60 "                                                            "
 
-double jaro_winkler_original_strcmp95(char *ying, char *yang, long y_length,
+double jaro_winkler_original_strcmp95(char *ying, char *yang, size_t y_length,
 		int *ind_c[]) {
 	/* Arguments:
 
@@ -95,15 +95,15 @@ double jaro_winkler_original_strcmp95(char *ying, char *yang, long y_length,
 
 	double weight, Num_sim;
 
-	long minv, search_range, lowlim, ying_length, hilim, N_trans, Num_com,
+	size_t minv, search_range, lowlim, ying_length, hilim, N_trans, Num_com,
 			yang_length;
 
-	int yl1, yi_st, N_simi;
+	size_t yl1, yi_st, N_simi;
 
-	register int i, j, k;
+	register size_t i, j, k;
 
 	/* Initialize the adjwt array on the first call to the function only.
-	 The adjwt array is used to give partial credit for characters that
+	 The adjwt array isint used to give partial credit for characters that
 	 may be errors due to known phonetic or character recognition errors.
 	 A typical example is to match the letter "O" with the number "0"           */
 	if (!pass) {
@@ -246,7 +246,7 @@ double jaro_winkler_original_strcmp95(char *ying, char *yang, long y_length,
 		if ((!ind_c[0]) && (minv > 4) && (Num_com > i + 1)
 				&& (2 * Num_com >= minv + i))
 			if (NOTNUM(ying_hold[0]))
-				weight += (double) (1.0 - weight)
+				weight += (1.0 - weight)
 						* ((double) (Num_com - i - 1)
 								/ ((double) (ying_length + yang_length - i * 2
 										+ 2)));
@@ -256,10 +256,10 @@ double jaro_winkler_original_strcmp95(char *ying, char *yang, long y_length,
 
 } /* strcmp95 */
 
-static int get_pref_length(const char *str1, const char *str2) {
+static size_t get_pref_length(const char *str1, const char *str2) {
 
-	int ret = MIN3(MIN_PREF_LEN, strlen(str1), strlen(str2));
-	int i;
+	size_t ret = MIN3(MIN_PREF_LEN, strlen(str1), strlen(str2));
+	size_t i;
 
 	for (i = 0; i < ret; i++) {
 
@@ -270,15 +270,14 @@ static int get_pref_length(const char *str1, const char *str2) {
 
 	}
 
-	return (ret);
+	return ret;
 
 }
 
-float jaro_winkler_similarity(const char *str1, const char *str2) {
+double jaro_winkler_similarity(const char *str1, const char *str2) {
 
-	float d = jaro_similarity(str1, str2);
-	int pref_len = get_pref_length(str1, str2);
-	return (d + (((float) pref_len) * PREF_ADJ_SCALE * (((float) 1.0) - d)));
-
+	double d = jaro_similarity(str1, str2);
+	size_t pref_len = get_pref_length(str1, str2);
+	return (d + (((double) pref_len) * PREF_ADJ_SCALE * (((double) 1.0) - d)));
 }
 

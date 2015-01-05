@@ -27,8 +27,7 @@
  *
  */
 
-#ifndef DOUBLE_METAPHONE__H
-#define DOUBLE_METAPHONE__H
+#pragma once
 
 typedef struct {
 	char *str;
@@ -45,6 +44,4 @@ typedef struct double_metaphone_result {
 void free_double_metaphone_result(double_metaphone_result *result);
 
 double_metaphone_result *double_metaphone(const char *str);
-float double_metaphone_similarity(const char *str1, const char *str2);
-
-#endif /* DOUBLE_METAPHONE__H */
+double double_metaphone_similarity(const char *str1, const char *str2);

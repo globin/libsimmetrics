@@ -36,7 +36,7 @@
 #include "tokenizer.h"
 #include "euclidean_distance.h"
 
-float euclidean_distance_custom(const char *str1, const char *str2, const void *v_tokenizer) {
+double euclidean_distance_custom(const char *str1, const char *str2, const void *v_tokenizer) {
 
 	const std_tokenizer_t *tokenizer = (std_tokenizer_t*)v_tokenizer;
 
@@ -50,7 +50,7 @@ float euclidean_distance_custom(const char *str1, const char *str2, const void *
 	hash_token_t *s;
 
 	int cs1, cs2;
-	float td = 0;
+	double td = 0;
 
 	char **tmp;
 
@@ -73,8 +73,7 @@ float euclidean_distance_custom(const char *str1, const char *str2, const void *
 
 		}
 
-		td += (float)(((float)cs1 - (float)cs2) * ((float)cs1 - (float)cs2));
-
+		td += ((double)cs1 - (double)cs2) * ((double)cs1 - (double)cs2);
 	}
 
 	utarray_free(t1);
@@ -84,11 +83,10 @@ float euclidean_distance_custom(const char *str1, const char *str2, const void *
 	hash_token_free(h2);
 	hash_token_free(all);
 
-	return (sqrtf(td));
-
+	return sqrt(td);
 }
 
-float euclidean_distance(const char *str1, const char *str2) {
+double euclidean_distance(const char *str1, const char *str2) {
 
 	std_tokenizer_t tokenizer = {
 			.delimiters = WHITESPACE_DELIMITERS,
@@ -97,28 +95,26 @@ float euclidean_distance(const char *str1, const char *str2) {
 	};
 
 	return (euclidean_distance_custom(str1, str2, &tokenizer));
-
 }
 
-float euclidean_distance_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer) {
+double euclidean_distance_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer) {
 
 	const std_tokenizer_t *tokenizer = (std_tokenizer_t*)v_tokenizer;
 
 	UT_array *tokarr1 = tokenizer->tok_utarr_func(str1, tokenizer->delimiters);
 	UT_array *tokarr2 = tokenizer->tok_utarr_func(str2, tokenizer->delimiters);
 
-	float tl1 = utarray_len(tokarr1), tl2 = utarray_len(tokarr2);
-	float tp = sqrtf((tl1 * tl1) + (tl2 * tl2));
-	float td = euclidean_distance_custom(str1, str2, tokenizer);
+	double tl1 = utarray_len(tokarr1), tl2 = utarray_len(tokarr2);
+	double tp = sqrt((tl1 * tl1) + (tl2 * tl2));
+	double td = euclidean_distance_custom(str1, str2, tokenizer);
 
 	utarray_free(tokarr1);
 	utarray_free(tokarr2);
 
 	return ((tp - td) / tp);
-
 }
 
-float euclidean_distance_similarity(const char *str1, const char *str2) {
+double euclidean_distance_similarity(const char *str1, const char *str2) {
 
 	std_tokenizer_t tokenizer = {
 			.delimiters = WHITESPACE_DELIMITERS,
@@ -127,5 +123,4 @@ float euclidean_distance_similarity(const char *str1, const char *str2) {
 	};
 
 	return (euclidean_distance_similarity_custom(str1, str2, &tokenizer));
-
 }

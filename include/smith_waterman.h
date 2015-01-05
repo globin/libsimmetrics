@@ -29,9 +29,9 @@
 #ifndef SMITH_WATERMAN_H_
 #define SMITH_WATERMAN_H_
 
-float smith_waterman(const char *str1, const char *str2);
-float smith_waterman_custom(const char *str1, const char *str2, const void *v_conf);
-float smith_waterman_similarity_custom(const char *str1, const char *str2, const void *v_conf);
-float smith_waterman_similarity(const char *str1, const char *str2);
+double smith_waterman(const char *str1, const char *str2);
+double smith_waterman_custom(const char *str1, const char *str2, const void *v_conf);
+double smith_waterman_similarity_custom(const char *str1, const char *str2, const void *v_conf);
+double smith_waterman_similarity(const char *str1, const char *str2);
 
 #endif /* SMITH_WATERMAN_H_ */

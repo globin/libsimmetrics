@@ -26,10 +26,7 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef METAPHONE_H_
-#define METAPHONE_H_
+#pragma once
 
 char *metaphone(const char *str);
-float metaphone_similarity(const char *str1, const char *str2);
-
-#endif /* METAPHONE_H_ */
+double metaphone_similarity(const char *str1, const char *str2);

@@ -94,18 +94,18 @@ static char get_mapping_code(const char *str, const int index) {
  */
 static char* clean(const char *str) {
 
-	int len = strlen(str);
+	size_t len = strlen(str);
 	char *res;
 
 	if (len == 0) {
 
-		res = malloc(sizeof(str));
+		res = (char*)malloc(sizeof(str));
 		res[0] = '\0';
 		return (res);
 
 	} else {
 
-		res = malloc(sizeof(str) * len);
+		res = (char*)malloc(sizeof(str) * len);
 		char chars[len];
 		int cnt = 0, i;
 
@@ -183,7 +183,7 @@ char *soundex(const char *_str) {
 
 	}
 
-	char *ret = malloc(sizeof(out) * (strlen(out) + 1));
+	char *ret = (char*)malloc(sizeof(out) * (strlen(out) + 1));
 	ret[strlen(out) + 1] = '\0';
 	strcpy(ret, out);
 	free((char*) str);
@@ -191,12 +191,12 @@ char *soundex(const char *_str) {
 	return (ret);
 }
 
-float soundex_similarity(const char *str1, const char *str2) {
+double soundex_similarity(const char *str1, const char *str2) {
 
 	char *s1 = soundex(str1);
 	char *s2 = soundex(str2);
 
-	float res = smith_waterman_gotoh_similarity(s1, s2);
+	double res = smith_waterman_gotoh_similarity(s1, s2);
 
 	free(s1);
 	free(s2);

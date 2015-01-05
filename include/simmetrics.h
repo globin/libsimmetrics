@@ -25,8 +25,7 @@
  *
  */
 
-#ifndef libsimmetrics_H
-#define libsimmetrics_H
+#pragma once
 
 #include <stdlib.h>
 #include <string.h>
@@ -59,22 +58,22 @@
 
 typedef union {
 
-	float (*custom_metric) (const char *, const char *, const void *);
-	float (*metric) (const char *, const char *);
+	double (*custom_metric) (const char *, const char *, const void *);
+	double (*metric) (const char *, const char *);
 
 } metric_function_t;
 
 typedef union {
 
-	float (*custom_similarity) (const char *, const char *, const void *);
-	float (*similarity) (const char *, const char *);
+	double (*custom_similarity) (const char *, const char *, const void *);
+	double (*similarity) (const char *, const char *);
 
 } similarity_function_t;
 
 typedef union {
 
-	int (*custom_distance) (const char *, const char *, const void *);
-	int (*distance) (const char *, const char *);
+	size_t (*custom_distance) (const char *, const char *, const void *);
+	size_t (*distance) (const char *, const char *);
 
 } distance_function_t;
 
@@ -83,6 +82,12 @@ typedef union {
 	char *(*normalize) (const char *);
 
 } normalize_function_t;
+
+typedef union {
+
+	double_metaphone_result *(*normalize) (const char *);
+
+} double_metaphone_function_t;
 
 distance_function_t* smc_block_distance();
 similarity_function_t* smc_block_distance_similarity();
@@ -98,7 +103,7 @@ similarity_function_t* smc_levenshtein_similarity();
 metric_function_t* smc_matching_coefficient();
 similarity_function_t* smc_matching_coefficient_similarity();
 normalize_function_t* smc_metaphone();
-normalize_function_t* smc_double_metaphone();
+double_metaphone_function_t * smc_double_metaphone();
 similarity_function_t* smc_metaphone_similarity();
 similarity_function_t* smc_double_metaphone_similarity();
 similarity_function_t* smc_monge_elkan_similarity();
@@ -113,5 +118,3 @@ metric_function_t* smc_smith_waterman_gotoh();
 similarity_function_t* smc_smith_waterman_gotoh_similarity();
 normalize_function_t* smc_soundex();
 similarity_function_t* smc_soundex_similarity();
-
-#endif /* libsimmetrics_H */

@@ -26,16 +26,11 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <stdbool.h>
-#include "cost.h"
 #include "uthash.h"
 #include "utarray.h"
 #include "tokenizer.h"
 
-float dice_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer) {
+double dice_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer) {
 
 	const std_tokenizer_t *tokenizer = (std_tokenizer_t*)v_tokenizer;
 
@@ -47,17 +42,16 @@ float dice_similarity_custom(const char *str1, const char *str2, const void *v_t
 	unsigned int ch1 = HASH_COUNT(h1), ch2 = HASH_COUNT(h2), ch3 = HASH_COUNT(all);
 	unsigned int ct = (ch1 + ch2) - ch3;
 
-	float ret = ((float) 2.0 * (float) ct) / (ch1 + ch2);
+	double ret = ((double) 2.0 * (double) ct) / (ch1 + ch2);
 
 	hash_token_free(h1);
 	hash_token_free(h2);
 	hash_token_free(all);
 
-	return (ret);
-
+	return ret;
 }
 
-float dice_similarity(const char *str1, const char *str2) {
+double dice_similarity(const char *str1, const char *str2) {
 
 	std_tokenizer_t tokenizer = {
 			.delimiters = WHITESPACE_DELIMITERS,
@@ -66,6 +60,4 @@ float dice_similarity(const char *str1, const char *str2) {
 	};
 
 	return (dice_similarity_custom(str1, str2, &tokenizer));
-
 }
-

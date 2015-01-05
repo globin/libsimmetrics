@@ -26,16 +26,12 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#include <stdlib.h>
-#include <string.h>
 #include <math.h>
-#include <stdbool.h>
-#include "cost.h"
 #include "uthash.h"
 #include "utarray.h"
 #include "tokenizer.h"
 
-float cosine_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer) {
+double cosine_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer) {
 
 	const std_tokenizer_t *tokenizer = (std_tokenizer_t*)v_tokenizer;
 
@@ -47,17 +43,16 @@ float cosine_similarity_custom(const char *str1, const char *str2, const void *v
 	unsigned int ch1 = HASH_COUNT(h1), ch2 = HASH_COUNT(h2), ch3 = HASH_COUNT(all);
 	unsigned int ct = (ch1 + ch2) - ch3;
 
-	const float ret = ((float)ct / (powf((float)ch1, (float)0.5) * powf((float)ch2, (float)0.5)));
+	const double ret = ((double)ct / (pow((double)ch1, (double)0.5) * pow((double)ch2, (double)0.5)));
 
 	hash_token_free(h1);
 	hash_token_free(h2);
 	hash_token_free(all);
 
-	return (ret);
-
+	return ret;
 }
 
-float cosine_similarity(const char *str1, const char *str2) {
+double cosine_similarity(const char *str1, const char *str2) {
 
 	std_tokenizer_t tokenizer = {
 			.delimiters = WHITESPACE_DELIMITERS,
@@ -65,7 +60,6 @@ float cosine_similarity(const char *str1, const char *str2) {
 			.tok_uq_hash_func = &uq_tokenize_to_hash
 	};
 
-	return (cosine_similarity_custom(str1, str2, &tokenizer));
-
+	return cosine_similarity_custom(str1, str2, &tokenizer);
 }
 

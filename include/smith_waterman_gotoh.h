@@ -29,9 +29,9 @@
 #ifndef SMITH_WATERMAN_GOTOH_H_
 #define SMITH_WATERMAN_GOTOH_H_
 
-float smith_waterman_gotoh_custom(const char *str1, const char *str2, const void *v_conf);
-float smith_waterman_gotoh(const char *str1, const char *str2);
-float smith_waterman_gotoh_similarity_custom(const char *str1, const char *str2, const void *v_conf);
-float smith_waterman_gotoh_similarity(const char *str1, const char *str2);
+double smith_waterman_gotoh_custom(const char *str1, const char *str2, const void *v_conf);
+double smith_waterman_gotoh(const char *str1, const char *str2);
+double smith_waterman_gotoh_similarity_custom(const char *str1, const char *str2, const void *v_conf);
+double smith_waterman_gotoh_similarity(const char *str1, const char *str2);
 
 #endif /* SMITH_WATERMAN_GOTOH_H_ */

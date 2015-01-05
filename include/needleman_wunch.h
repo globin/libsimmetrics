@@ -26,12 +26,9 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef NEEDLEMAN_WUNCH_H_
-#define NEEDLEMAN_WUNCH_H_
+#pragma once
 
-float needleman_wunch_custom(const char *str1, const char *str2, const void *v_conf);
-float needleman_wunch(const char *str1, const char *str2);
-float needleman_wunch_similarity_custom(const char *str1, const char *str2, const void *v_conf);
-float needleman_wunch_similarity(const char *str1, const char *str2);
-
-#endif /* NEEDLEMAN_WUNCH_H_ */
+double needleman_wunch_custom(const char *str1, const char *str2, const void *v_conf);
+double needleman_wunch(const char *str1, const char *str2);
+double needleman_wunch_similarity_custom(const char *str1, const char *str2, const void *v_conf);
+double needleman_wunch_similarity(const char *str1, const char *str2);

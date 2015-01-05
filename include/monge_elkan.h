@@ -26,10 +26,7 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef MONGE_ELKAN_H_
-#define MONGE_ELKAN_H_
+#pragma once
 
-float monge_elkan_similarity_custom(const char *str1, const char *str2, const void *v_conf);
-float monge_elkan_similarity(const char *str1, const char *str2);
-
-#endif /* MONGE_ELKAN_H_ */
+double monge_elkan_similarity_custom(const char *str1, const char *str2, const void *v_conf);
+double monge_elkan_similarity(const char *str1, const char *str2);

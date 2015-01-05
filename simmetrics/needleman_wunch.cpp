@@ -31,22 +31,21 @@
 #include "util.h"
 #include "needleman_wunch.h"
 
-float needleman_wunch_custom(const char *str1, const char *str2,
-		const void *v_conf) {
+double needleman_wunch_custom(const char *str1, const char *str2, const void *v_conf) {
 
-	const sub_cost_t *conf = v_conf;
+	const sub_cost_t *conf = (sub_cost_t*)v_conf;
 
-	int n = strlen(str1);
-	int m = strlen(str2);
+	size_t n = strlen(str1);
+	size_t m = strlen(str2);
 
 	int i, j;
-	float cost;
+	double cost;
 
 	if ((n == 0) || (m == 0)) {
 		return (0);
 	}
 
-	float d[n + 1][m + 1];
+	double d[n + 1][m + 1];
 
 	for (i = 0; i <= n; i++)
 		d[i][0] = i;
@@ -67,35 +66,34 @@ float needleman_wunch_custom(const char *str1, const char *str2,
 
 	}
 
-	return (d[n][m]);
+	return d[n][m];
 
 }
 
-float needleman_wunch(const char *str1, const char *str2) {
+double needleman_wunch(const char *str1, const char *str2) {
 
 	sub_cost_t *sub_cost = sub_cost_1();
 	sub_cost->cost->gap_cost = 2;
 
-	float ret = needleman_wunch_custom(str1, str2, sub_cost);
+	double ret = needleman_wunch_custom(str1, str2, sub_cost);
 
 	free(sub_cost->cost);
 	free(sub_cost);
 
-	return (ret);
+	return ret;
 
 }
 
-float needleman_wunch_similarity_custom(const char *str1, const char *str2,
-		const void *v_conf) {
+double needleman_wunch_similarity_custom(const char *str1, const char *str2, const void *v_conf) {
 
-	const sub_cost_t *conf = v_conf;
+	const sub_cost_t *conf = (sub_cost_t*)v_conf;
 
-	float nw = needleman_wunch_custom(str1, str2, conf);
+	double nw = needleman_wunch_custom(str1, str2, conf);
 
-	float l1 = ((float) strlen(str1));
-	float l2 = ((float) strlen(str2));
-	float max_val = MAX(l1, l2);
-	float min_val = max_val;
+	double l1 = ((double) strlen(str1));
+	double l2 = ((double) strlen(str2));
+	double max_val = MAX(l1, l2);
+	double min_val = max_val;
 
 	if (conf->cost->max_cost > conf->cost->gap_cost)
 		max_val *= conf->cost->max_cost;
@@ -115,23 +113,21 @@ float needleman_wunch_similarity_custom(const char *str1, const char *str2,
 	}
 
 	if (max_val == 0)
-		return (0);
+		return 0;
 	else
-		return (1 - (nw / max_val));
-
+		return 1 - (nw / max_val);
 }
 
-float needleman_wunch_similarity(const char *str1, const char *str2) {
+double needleman_wunch_similarity(const char *str1, const char *str2) {
 
 	sub_cost_t *sub_cost = sub_cost_1();
 	sub_cost->cost->gap_cost = 2;
 
-	float ret = needleman_wunch_similarity_custom(str1, str2, sub_cost);
+	double ret = needleman_wunch_similarity_custom(str1, str2, sub_cost);
 
 	free(sub_cost->cost);
 	free(sub_cost);
 
-	return (ret);
-
+	return ret;
 }
 

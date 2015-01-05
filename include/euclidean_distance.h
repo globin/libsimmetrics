@@ -26,12 +26,9 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef EUCLIDEAN_DISTANCE_H_
-#define EUCLIDEAN_DISTANCE_H_
+#pragma once
 
-float euclidean_distance_custom(const char *str1, const char *str2, const void *v_tokenizer);
-float euclidean_distance(const char *str1, const char *str2);
-float euclidean_distance_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
-float euclidean_distance_similarity(const char *str1, const char *str2);
-
-#endif /* EUCLIDEAN_DISTANCE_H_ */
+double euclidean_distance_custom(const char *str1, const char *str2, const void *v_tokenizer);
+double euclidean_distance(const char *str1, const char *str2);
+double euclidean_distance_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
+double euclidean_distance_similarity(const char *str1, const char *str2);

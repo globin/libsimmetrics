@@ -26,10 +26,7 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef JACCARD_SIMILARITY_H_
-#define JACCARD_SIMILARITY_H_
+#pragma once
 
-float jaccard_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
-float jaccard_similarity(const char *str1, const char *str2);
-
-#endif /* JACCARD_SIMILARITY_H_ */
+double jaccard_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
+double jaccard_similarity(const char *str1, const char *str2);

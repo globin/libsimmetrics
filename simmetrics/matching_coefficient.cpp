@@ -28,16 +28,12 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
-#include "cost.h"
-#include "utlist.h"
 #include "utarray.h"
-#include "uthash.h"
 #include "util.h"
 #include "tokenizer.h"
 #include "matching_coefficient.h"
 
-float matching_coefficient_custom(const char *str1, const char *str2, const void *v_tokenizer) {
+double matching_coefficient_custom(const char *str1, const char *str2, const void *v_tokenizer) {
 
 	const std_tokenizer_t *tokenizer = (std_tokenizer_t*)v_tokenizer;
 
@@ -66,11 +62,10 @@ float matching_coefficient_custom(const char *str1, const char *str2, const void
 	utarray_free(t1);
 	utarray_free(t2);
 
-	return ((float) tf);
-
+	return (double) tf;
 }
 
-float matching_coefficient(const char *str1, const char *str2) {
+double matching_coefficient(const char *str1, const char *str2) {
 
 	std_tokenizer_t tokenizer = {
 			.delimiters = WHITESPACE_DELIMITERS,
@@ -78,11 +73,10 @@ float matching_coefficient(const char *str1, const char *str2) {
 			.tok_uq_hash_func = &uq_tokenize_to_hash
 	};
 
-	return (matching_coefficient_custom(str1, str2, &tokenizer));
-
+	return matching_coefficient_custom(str1, str2, &tokenizer);
 }
 
-float matching_coefficient_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer) {
+double matching_coefficient_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer) {
 
 	const std_tokenizer_t *tokenizer = (std_tokenizer_t*)v_tokenizer;
 
@@ -92,16 +86,15 @@ float matching_coefficient_similarity_custom(const char *str1, const char *str2,
 
 	const int tot_p = MAX(utarray_len(tm1), utarray_len(tm2));
 
-	float ret = matching_coefficient_custom(str1, str2, tokenizer) / (float) tot_p;
+	double ret = matching_coefficient_custom(str1, str2, tokenizer) / (double) tot_p;
 
 	utarray_free(tm1);
 	utarray_free(tm2);
 
-	return (ret);
-
+	return ret;
 }
 
-float matching_coefficient_similarity(const char *str1, const char *str2) {
+double matching_coefficient_similarity(const char *str1, const char *str2) {
 
 	std_tokenizer_t tokenizer = {
 			.delimiters = WHITESPACE_DELIMITERS,
@@ -109,7 +102,6 @@ float matching_coefficient_similarity(const char *str1, const char *str2) {
 			.tok_uq_hash_func = &uq_tokenize_to_hash
 	};
 
-	return (matching_coefficient_similarity_custom(str1, str2, &tokenizer));
-
+	return matching_coefficient_similarity_custom(str1, str2, &tokenizer);
 }
 

@@ -26,9 +26,6 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef JARO_H_
-#define JARO_H_
+#pragma once
 
-float jaro_similarity(const char *str1, const char *str2);
-
-#endif /* JARO_H_ */
+double jaro_similarity(const char *str1, const char *str2);

@@ -78,7 +78,7 @@ dl_token_t *tokenize_to_dllist(const char *str, const char *delimiters) {
 dl_token_t *qgram_tokenize_to_dllist(const char *str, const qgram_t *qtype) {
 
 	int i;
-	int init_len = strlen(str) + 1;
+	size_t init_len = strlen(str) + 1;
 	char *tmp;
 
 	//Mem corruption will occur otherwise...
@@ -108,7 +108,7 @@ dl_token_t *qgram_tokenize_to_dllist(const char *str, const qgram_t *qtype) {
 	dl_token_t *r = NULL;
 
 	int cp = 0;
-	int len = strlen(tmp) - qtype->qgram_len + 1;
+	size_t len = strlen(tmp) - qtype->qgram_len + 1;
 	char *t_ptr;
 
 	while(cp < len) {
@@ -132,7 +132,7 @@ dl_token_t *qgram_tokenize_to_dllist(const char *str, const qgram_t *qtype) {
 hash_token_t *qgram_uq_tokenize_to_hash(const char *str, const qgram_t *qtype) {
 
 	int i;
-	int init_len = strlen(str) + 1;
+	size_t init_len = strlen(str) + 1;
 	unsigned int hash;
 	char *tmp;
 
@@ -162,7 +162,7 @@ hash_token_t *qgram_uq_tokenize_to_hash(const char *str, const qgram_t *qtype) {
 	hash_token_t *s, *table = NULL;
 
 	int cp = 0;
-	int len = strlen(tmp) - qtype->qgram_len + 1;
+	size_t len = strlen(tmp) - qtype->qgram_len + 1;
 	char *t_ptr, *hchk;
 
 	while(cp < len) {
@@ -201,7 +201,7 @@ hash_token_t *qgram_uq_tokenize_to_hash(const char *str, const qgram_t *qtype) {
 UT_array *qgram_tokenize_to_utarray(const char *str, const qgram_t *qtype) {
 
 	int i;
-	int init_len = strlen(str) + 1;
+	size_t init_len = strlen(str) + 1;
 	char *tmp;
 
 	//Mem corruption will occur otherwise...
@@ -231,12 +231,12 @@ UT_array *qgram_tokenize_to_utarray(const char *str, const qgram_t *qtype) {
 	utarray_new(strs, &ut_str_icd);
 
 	int cp = 0;
-	int len = strlen(tmp) - qtype->qgram_len + 1;
+	size_t len = strlen(tmp) - qtype->qgram_len + 1;
 	char *t_ptr, *el;
 
 	while(cp < len) {
 
-		t_ptr = (char *)&tmp[cp];
+		t_ptr = &tmp[cp];
 		//Allocate all chars - plus terminator...
 		el = (char*)calloc((qtype->qgram_len + 1), sizeof(char));
 		//Copy bytes safely - strncpy should append the \0

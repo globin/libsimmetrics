@@ -27,19 +27,19 @@
  */
 
 #include <stdlib.h>
-#include <limits.h>
 #include <string.h>
-#include <stdio.h>
 #include "jaro.h"
 #include "util.h"
 
 static char *get_common_chars(const char *str1, const char *str2,
-		const int d_step) {
+		const size_t d_step) {
 
 	char *ret_str;
 	char ret[strlen(str1) + 1];
 	char copy[strlen(str2) + 1];
-	int i, j, k = 0;
+	int i, k = 0;
+
+	size_t j;
 
 	strcpy(copy, str2);
 
@@ -47,8 +47,8 @@ static char *get_common_chars(const char *str1, const char *str2,
 
 		char tmp = str1[i];
 
-		int max = MAX(0, (i - d_step));
-		int min = MIN(i + d_step, ((int)strlen(str2) - 1));
+		size_t max = MAX(0, (i - d_step));
+		size_t min = MIN(i + d_step, strlen(str2) - 1);
 
 		for (j = max; j < min; j++) {
 
@@ -66,26 +66,26 @@ static char *get_common_chars(const char *str1, const char *str2,
 
 	}
 
-	ret[k++] = '\0';
-	ret_str = malloc(sizeof(ret) * strlen(ret));
+	ret[++k] = '\0';
+	ret_str = (char*)malloc(sizeof(ret) * strlen(ret));
 	strcpy(ret_str, ret);
 
 	return (ret_str);
 
 }
 
-float jaro_similarity(const char *str1, const char *str2) {
+double jaro_similarity(const char *str1, const char *str2) {
 
-	int halflen = ((MIN(strlen(str1), strlen(str2))) / 2)
+	size_t halflen = ((MIN(strlen(str1), strlen(str2))) / 2)
 			+ ((MIN(strlen(str1), strlen(str2))) % 2);
 
 	char *com1 = get_common_chars(str1, str2, halflen);
 	char *com2 = get_common_chars(str2, str1, halflen);
 
-	int c1_len = strlen(com1);
-	int c2_len = strlen(com2);
-	int s1_len = strlen(str1);
-	int s2_len = strlen(str2);
+	size_t c1_len = strlen(com1);
+	size_t c2_len = strlen(com2);
+	size_t s1_len = strlen(str1);
+	size_t s2_len = strlen(str2);
 
 	if ((c1_len == 0) || (c2_len == 0)) {
 
@@ -115,11 +115,10 @@ float jaro_similarity(const char *str1, const char *str2) {
 	free(com1);
 	free(com2);
 
-	trans /= (float) 2;
+	trans /= (double) 2;
 
-	return (((float) c1_len / ((float) s1_len)
-			+ (float) c2_len / ((float) s2_len)
-			+ ((float) c1_len - (float) trans) / ((float) c1_len)) / ((float) 3));
-
+	return ((double) c1_len / ((double) s1_len)
+			+ (double) c2_len / ((double) s2_len)
+			+ ((double) c1_len - (double) trans) / ((double) c1_len)) / ((double) 3);
 }
 

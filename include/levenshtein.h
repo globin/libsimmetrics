@@ -26,11 +26,8 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef LEVENSHTEIN_H_
-#define LEVENSHTEIN_H_
+#pragma once
 
-int levenshtein(const char *s, const char *t);
+size_t levenshtein(const char *s, const char *t);
 
 double levenshtein_similarity(const char *str1, const char *str2);
-
-#endif /* LEVENSHTEIN_H_ */

@@ -26,10 +26,7 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef COSINE_SIMILARITY_H_
-#define COSINE_SIMILARITY_H_
+#pragma once
 
-float cosine_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
-float cosine_similarity(const char *str1, const char *str2);
-
-#endif /* COSINE_SIMILARITY_H_ */
+double cosine_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
+double cosine_similarity(const char *str1, const char *str2);

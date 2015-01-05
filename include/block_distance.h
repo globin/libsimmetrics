@@ -26,12 +26,11 @@
  *      Author: Johnathan Botha <jokillsya@gmail.com>
  */
 
-#ifndef BLOCK_DISTANCE_H_
-#define BLOCK_DISTANCE_H_
+#pragma once
 
-int block_distance_custom(const char * str1, const char *str2, const void *v_tokenizer);
-int block_distance(const char * str1, const char *str2);
-float block_distance_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
-float block_distance_similarity(const char *str1, const char *str2);
+#include <glob.h>
 
-#endif /* BLOCK_DISTANCE_H_ */
+size_t block_distance_custom(const char * str1, const char *str2, const void *v_tokenizer);
+size_t block_distance(const char * str1, const char *str2);
+double block_distance_similarity_custom(const char *str1, const char *str2, const void *v_tokenizer);
+double block_distance_similarity(const char *str1, const char *str2);

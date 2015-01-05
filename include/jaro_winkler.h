@@ -26,12 +26,9 @@
  *      Author: Johnathan Botha <jokillsya@ gmail.com>
  */
 
-#ifndef JARO_WINKLER_H_
-#define JARO_WINKLER_H_
+#pragma once
 
 #define MIN_PREF_LEN 6
-#define PREF_ADJ_SCALE (float)0.1
+#define PREF_ADJ_SCALE (double)0.1
 
-float jaro_winkler_similarity(const char *str1, const char *str2);
-
-#endif /* JARO_WINKLER_H_ */
+double jaro_winkler_similarity(const char *str1, const char *str2);

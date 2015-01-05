@@ -32,7 +32,6 @@
  */
 
 #include <string.h>
-#include <stdlib.h>
 #include "levenshtein.h"
 
 # ifdef LEV_CASE_INSENSITIVE
@@ -44,10 +43,10 @@
 
 # define min(x, y) ((x) < (y) ? (x) : (y))
 
-int levenshtein(const char *str1, const char *str2) {
+size_t levenshtein(const char *str1, const char *str2) {
 	size_t len1 = strlen(str1), len2 = strlen(str2);
 	unsigned int *v = new unsigned int[len2 + 1];
-	unsigned int i, j, current, next, cost;
+	unsigned int i, j, current, next = 0, cost;
 
 	/* strip common prefixes */
 	while (len1 > 0 && len2 > 0 && eq(str1[0], str2[0]))
@@ -56,11 +55,11 @@ int levenshtein(const char *str1, const char *str2) {
 	/* handle degenerate cases */
 	if (!len1) {
 		delete[] v;
-		return (len2);
+		return len2;
 	}
 	if (!len2) {
 		delete[] v;
-        return (len1);
+        return len1;
     }
 
 	/* initialize the column vector */
@@ -99,7 +98,7 @@ int levenshtein(const char *str1, const char *str2) {
 
 double levenshtein_similarity(const char *str1, const char *str2) {
 
-	unsigned int lev_dist = levenshtein(str1, str2);
+	size_t lev_dist = levenshtein(str1, str2);
 
 	double max_len = (double) strlen(str1);
 	double str2_len = (double) strlen(str2);
@@ -108,9 +107,8 @@ double levenshtein_similarity(const char *str1, const char *str2) {
 		max_len = str2_len;
 
 	if (max_len == 0)
-		return ((double) 1.0);
+		return 1;
 	else
-		return ((double) 1.0 - ((double) lev_dist / max_len));
-
+		return 1.0 - ((double) lev_dist / max_len);
 }
 
