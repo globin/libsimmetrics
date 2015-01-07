@@ -28,6 +28,8 @@
 
 #pragma once
 
-size_t levenshtein(const char *s, const char *t);
+#include <string>
+
+std::size_t levenshtein(const char *s, const char *t);
 
 double levenshtein_similarity(const char *str1, const char *str2);
